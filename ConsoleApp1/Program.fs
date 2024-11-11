@@ -113,5 +113,4 @@ let main argv =
 
     0 // Return code
 
-// Note: Make sure the "war_and_peace.txt" file is available in the correct directory.
-// You can adjust the file paths in the main function accordingly.
+
