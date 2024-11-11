@@ -2,17 +2,74 @@
 open System.IO
 open System.Text.RegularExpressions
 
-// Define Red-Black Tree data structure
-// In this implementation, we approximate it using a Set, which internally acts as a balanced tree.
-type RedBlackTree<'T when 'T: comparison> = Set<'T>
+// Define the Red-Black Tree data structure
+// Enum for color of nodes
+type Color =
+    | Red
+    | Black
 
-// Function to insert a word into the Red-Black Tree
-let insertWord (tree: RedBlackTree<string>) (word: string) : RedBlackTree<string> =
-    tree.Add(word)
+// Type to represent the Red-Black Tree node
+type RBTree<'T when 'T : comparison> =
+    | Empty
+    | Node of Color * RBTree<'T> * 'T * RBTree<'T>
 
-// Function to traverse the Red-Black Tree in order and return the sorted list of words
-let traverseTree (tree: RedBlackTree<string>) : List<string> =
-    tree |> Set.toList
+// Function to create a new empty Red-Black Tree
+let emptyTree = Empty
+
+// Utility function to create a new node
+let makeNode color left value right = Node(color, left, value, right)
+
+// Function to rotate left
+let rotateLeft (tree: RBTree<'T>) =
+    match tree with
+    | Node(color, left, value, Node(Red, rightLeft, rightValue, rightRight)) ->
+        Node(color, Node(Red, left, value, rightLeft), rightValue, rightRight)
+    | _ -> tree
+
+// Function to rotate right
+let rotateRight (tree: RBTree<'T>) =
+    match tree with
+    | Node(color, Node(Red, leftLeft, leftValue, leftRight), value, right) ->
+        Node(color, leftLeft, leftValue, Node(Red, leftRight, value, right))
+    | _ -> tree
+
+// Function to color flip
+let colorFlip (tree: RBTree<'T>) =
+    match tree with
+    | Node(Black, Node(Red, leftLeft, leftValue, leftRight), value, Node(Red, rightLeft, rightValue, rightRight)) ->
+        Node(Red, Node(Black, leftLeft, leftValue, leftRight), value, Node(Black, rightLeft, rightValue, rightRight))
+    | _ -> tree
+
+// Balance function to ensure tree remains balanced after insertion
+let balance (tree: RBTree<'T>) =
+    tree
+    |> rotateLeft
+    |> rotateRight
+    |> colorFlip
+
+// Function to insert a value into the Red-Black Tree
+let rec insert value tree =
+    match tree with
+    | Empty -> Node(Red, Empty, value, Empty)
+    | Node(color, left, nodeValue, right) ->
+        if value < nodeValue then
+            balance (makeNode color (insert value left) nodeValue right)
+        elif value > nodeValue then
+            balance (makeNode color left nodeValue (insert value right))
+        else
+            tree
+
+// Ensure the root is always black after insertion
+let insertValue value tree =
+    match insert value tree with
+    | Node(_, left, nodeValue, right) -> Node(Black, left, nodeValue, right)
+    | Empty -> Empty
+
+// Traverse the Red-Black Tree in order and return the sorted list of words
+let rec traverseTree tree =
+    match tree with
+    | Empty -> []
+    | Node(_, left, value, right) -> traverseTree left @ [value] @ traverseTree right
 
 // Define a function to parse and extract words from a line.
 let extractWords (line: string) =
@@ -23,12 +80,11 @@ let extractWords (line: string) =
     |> Seq.toList
 
 // Read the file and parse words, inserting them into the Red-Black Tree
-let buildRedBlackTree (filePath: string) : RedBlackTree<string> =
+let buildRedBlackTree (filePath: string) : RBTree<string> =
     let lines = File.ReadLines(filePath)
-    let emptyTree = Set.empty
     lines
     |> Seq.collect extractWords
-    |> Seq.fold insertWord emptyTree
+    |> Seq.fold (fun tree word -> insertValue word tree) emptyTree
 
 // Write the sorted words to an output file
 let writeWordsToFile (words: List<string>) (outputPath: string) =
