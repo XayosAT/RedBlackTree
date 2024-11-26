@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Christoph\\RiderProjects\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.fsproj": {}
+    "C:\\Users\\Christoph\\Unity\\RedBlackTree\\ConsoleApp1\\ConsoleApp1.fsproj": {}
   },
   "projects": {
-    "C:\\Users\\Christoph\\RiderProjects\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.fsproj": {
+    "C:\\Users\\Christoph\\Unity\\RedBlackTree\\ConsoleApp1\\ConsoleApp1.fsproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Christoph\\RiderProjects\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.fsproj",
+        "projectUniqueName": "C:\\Users\\Christoph\\Unity\\RedBlackTree\\ConsoleApp1\\ConsoleApp1.fsproj",
         "projectName": "ConsoleApp1",
-        "projectPath": "C:\\Users\\Christoph\\RiderProjects\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.fsproj",
+        "projectPath": "C:\\Users\\Christoph\\Unity\\RedBlackTree\\ConsoleApp1\\ConsoleApp1.fsproj",
         "packagesPath": "C:\\Users\\Christoph\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Christoph\\RiderProjects\\ConsoleApp1\\ConsoleApp1\\obj\\",
+        "outputPath": "C:\\Users\\Christoph\\Unity\\RedBlackTree\\ConsoleApp1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Christoph\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -20,7 +20,7 @@
           "net8.0"
         ],
         "sources": {
-          "C:\\Users\\Christoph\\.dotnet\\sdk\\8.0.401\\FSharp\\library-packs": {},
+          "C:\\Program Files\\dotnet\\sdk\\8.0.401\\FSharp\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -62,7 +62,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\Christoph\\.dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
