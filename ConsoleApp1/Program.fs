@@ -1,6 +1,5 @@
 ﻿module ConsoleApp1
 
-open System
 open System.IO
 open System.Text.RegularExpressions
 
@@ -63,7 +62,7 @@ let rec traverseTree tree =
     | Node(_, left, value, right) -> traverseTree left @ [value] @ traverseTree right
 
 let extractWords (line: string) =
-    let pattern = "[a-zA-Z'\\-\\.]+"
+    let pattern = "\\b[a-zA-Z']+\\b"
     Regex.Matches(line, pattern)
     |> Seq.cast<Match>
     |> Seq.map (fun m -> m.Value.ToLower())
@@ -89,8 +88,8 @@ let main argv =
             1  
         else
             
-            let inputFilePath = argv.[0]
-            let outputFilePath = argv.[1]
+            let inputFilePath = argv[0]
+            let outputFilePath = argv[1]
 
             let redBlackTree = buildRedBlackTree inputFilePath
             let sortedWords = traverseTree redBlackTree
@@ -105,6 +104,6 @@ let main argv =
             1  
         | ex ->
             printfn "An error occurred: %s" (ex.Message)
-            1  
+            1
 
 
