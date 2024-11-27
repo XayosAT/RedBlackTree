@@ -81,12 +81,12 @@ let writeWordsToFile (words: List<string>) (outputPath: string) =
 [<EntryPoint>]
 let main argv =
     try
-
         if argv.Length < 2 then
             printfn "Error: Please provide input and output file paths."
             printfn "Usage: <program> <inputFilePath> <outputFilePath>"
             1  
         else
+            let stopwatch = System.Diagnostics.Stopwatch.StartNew()
             
             let inputFilePath = argv[0]
             let outputFilePath = argv[1]
@@ -95,8 +95,9 @@ let main argv =
             let sortedWords = traverseTree redBlackTree
             writeWordsToFile sortedWords outputFilePath
 
-            
+            stopwatch.Stop()
             printfn "Successfully processed the file and wrote sorted unique words to %s" outputFilePath
+            printfn "Time taken: %d ms" stopwatch.ElapsedMilliseconds
             0  
     with
         | :? FileNotFoundException ->
